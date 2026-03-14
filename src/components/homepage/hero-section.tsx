@@ -6,6 +6,8 @@ import { Button } from "@/src/components/ui/button";
 
 import movieLoader from "@/src/lib/utils/movieLoader";
 import { Skeleton } from "@/src/components/ui/skeleton";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { useSyncMovies } from "@/src/lib/redux/useSyncMovies";
 
 export const HeroSkeleton = () => {
   return (
@@ -57,8 +59,9 @@ export const HeroSkeleton = () => {
 
 // Helper component for individual slides
 export const HeroSlide = ({ movie }: { movie: any }) => {
+  // const movies = useAppSelector((state) => state.movies.movies);
   const imageSrc = movie.poster || "/placeholder-hero.jpg";
-
+  // console.log(movies);
   return (
     <div className="relative h-[70vh] md:h-[85vh] w-full shrink-0 snap-center overflow-hidden bg-primary [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
       {/* Background Image */}
@@ -148,12 +151,26 @@ export const HeroSlide = ({ movie }: { movie: any }) => {
 };
 
 // Hero section component - Presentational Container
-export function HeroSection({ children }: { children: React.ReactNode }) {
+// Hero section component - Presentational Container
+export function HeroSection() {
+  const { isLoading, error } = useSyncMovies(1, 10);
+
+  const moviesRedux = useAppSelector((state) => state.movies.movies);
+  const heroMovies = moviesRedux?.slice(0, 5) || [];
+
   return (
     <section className="relative w-full overflow-hidden">
       {/* Scroll Snap Container */}
       <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
-        {children}
+        {isLoading && <HeroSkeleton />}
+        {error && (
+          <div className="h-[70vh] md:h-[85vh] w-full flex items-center justify-center text-red-500">
+            Gagal memuat film.
+          </div>
+        )}
+        {!isLoading &&
+          !error &&
+          heroMovies.map((movie) => <HeroSlide key={movie.id} movie={movie} />)}
       </div>
     </section>
   );

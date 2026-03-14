@@ -4,8 +4,13 @@ import { Movie } from "@/src/lib/types/movie";
 import Image from "next/image";
 import { Play } from "lucide-react";
 
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { useSyncMovies } from "@/src/lib/redux/useSyncMovies";
+
 // Movie card component - Single Responsibility
 export function MovieCard({ movie }: { movie: Movie }) {
+  const movies = useAppSelector((state) => state.movies.movies);
+  // console.log(movies);
   // Fallback to imageUrl if poster is missing (though poster should be main)
   const imageSrc = movie.poster || "/placeholder-movie.jpg";
 
@@ -46,14 +51,18 @@ export function MovieCard({ movie }: { movie: Movie }) {
   );
 }
 
-// Movie section container (Presentational)
 export function MovieSection({
   title,
-  children,
+  reverse = false,
 }: {
   title: string;
-  children: React.ReactNode;
+  reverse?: boolean;
 }) {
+  const { isLoading } = useSyncMovies(1, 10);
+
+  const moviesRedux = useAppSelector((state) => state.movies.movies);
+  const displayMovies = reverse ? [...moviesRedux].reverse() : moviesRedux;
+
   return (
     <section className="mb-8 md:mb-12 responsive-width mx-auto px-2">
       <div className="">
@@ -62,7 +71,25 @@ export function MovieSection({
         </h2>
 
         <div className="overflow-x-auto scrollbar-hide  -mx-4 sm:-mx-0">
-          <div className="flex gap-4 pb-4 ">{children}</div>
+          <div className="flex gap-4 pb-4 ">
+            {isLoading && (
+              <div className="flex gap-4 overflow-hidden">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-[150px] sm:w-[180px] md:w-[200px] flex-shrink-0"
+                  >
+                    <div className="aspect-[2/3] bg-gray-800 rounded-lg animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {!isLoading &&
+              displayMovies?.map((movie, idx) => (
+                <MovieCard key={`${movie.id}-${idx}`} movie={movie} />
+              ))}
+          </div>
         </div>
       </div>
     </section>

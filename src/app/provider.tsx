@@ -8,6 +8,9 @@ import { ErrorBoundary } from "react-error-boundary";
 import { MainErrorFallback } from "@/src/components/errors/main";
 
 import { queryConfig } from "@/src/lib/reactQuery";
+import { useRef } from "react";
+import { Provider } from "react-redux";
+import { makeStore, AppStore } from "../lib/redux/store";
 
 // setup tanstack untuk info lebih lengkap cek repo react bulletproof
 
@@ -23,11 +26,17 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }),
   );
 
+  const storeRef = useRef<AppStore>(undefined);
+  if (!storeRef.current) {
+    // Create the store instance the first time this renders
+    storeRef.current = makeStore();
+  }
+
   return (
     <ErrorBoundary FallbackComponent={MainErrorFallback}>
       <QueryClientProvider client={queryClient}>
         {process.env.DEV && <ReactQueryDevtools />}
-        {children}
+        <Provider store={storeRef.current}>{children}</Provider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
