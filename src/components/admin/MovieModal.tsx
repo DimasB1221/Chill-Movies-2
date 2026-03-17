@@ -15,7 +15,7 @@ interface MovieModalProps {
   isLoading: boolean;
 }
 
-const MovieModal: React.FC<MovieModalProps> = ({
+const MovieModalContent: React.FC<MovieModalProps> = ({
   isOpen,
   onClose,
   movie,
@@ -23,35 +23,18 @@ const MovieModal: React.FC<MovieModalProps> = ({
   isLoading,
 }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    poster: "",
-    rating: "",
+    title: movie?.title || "",
+    poster: movie?.poster || "",
+    rating: movie?.rating?.toString() || "",
   });
-  const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
+  const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>(
+    movie?.genre_ids || []
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Dependency Inversion: depend on hook abstraction
   const { data: genres = [], isLoading: isLoadingGenres } = useGetGenres();
-
-  useEffect(() => {
-    if (movie) {
-      setFormData({
-        title: movie.title || "",
-        poster: movie.poster || "",
-        rating: movie.rating?.toString() || "",
-      });
-      // Set selected genre IDs dari movie yang sedang diedit
-      setSelectedGenreIds(movie.genre_ids || []);
-    } else {
-      setFormData({
-        title: "",
-        poster: "",
-        rating: "",
-      });
-      setSelectedGenreIds([]);
-    }
-  }, [movie, isOpen]);
 
   // Close dropdown ketika klik di luar
   useEffect(() => {
@@ -66,8 +49,6 @@ const MovieModal: React.FC<MovieModalProps> = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  if (!isOpen) return null;
 
   const handleToggleGenre = (genreId: string) => {
     setSelectedGenreIds((prev) =>
@@ -269,6 +250,11 @@ const MovieModal: React.FC<MovieModalProps> = ({
       </div>
     </div>
   );
+};
+
+const MovieModal: React.FC<MovieModalProps> = (props) => {
+  if (!props.isOpen) return null;
+  return <MovieModalContent {...props} />;
 };
 
 export default MovieModal;

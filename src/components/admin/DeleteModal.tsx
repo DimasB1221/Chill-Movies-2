@@ -33,8 +33,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
 
           <p className="text-white/70">
             Are you sure you want to delete{" "}
-            <span className="text-white font-semibold">"{movieTitle}"</span>?
-            This action cannot be undone.
+            <span className="text-white font-semibold">{movieTitle}</span>? This
+            action cannot be undone.
           </p>
         </div>
 
