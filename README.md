@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chill Movies (Frontend)
 
-## Getting Started
+> **Catatan / Note:** Proyek ini masih dalam tahap pengembangan. / _This project is still under development._
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🇮🇩 Bahasa Indonesia
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Cara Install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Pastikan Anda telah menginstal **Node.js** di sistem Anda.
+2. Unduh atau _clone_ repositori ini ke komputer Anda.
+3. Buka terminal dan arahkan ke direktori proyek (`cd nama-folder`).
+4. Jika diperlukan, atur _environment variables_ (seperti konfigurasi Supabase) di file `.env.local` berdasarkan daftar di `.env`.
+5. Jalankan perintah berikut untuk menginstal seluruh dependensi:
+   ```bash
+   npm install
+   ```
+6. Setelah instalasi selesai, jalankan _development server_:
+   ```bash
+   npm run dev
+   ```
+7. Buka browser dan akses alamat [http://localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Cara Akses Admin Dashboard
 
-## Learn More
+Untuk masuk ke halaman Admin Dashboard, gunakan akun berikut pada saat login:
 
-To learn more about Next.js, take a look at the following resources:
+- **Email:** `admin1@gmail.com`
+- **Password:** admin123
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Setelah berhasil _login_, Anda akan diberikan akses penuh ke fitur manajemen film dan admin lainnya.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🇬🇧 English
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### How to Install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Ensure you have **Node.js** installed on your system.
+2. Download or clone this repository to your local machine.
+3. Open a terminal and navigate to the project directory (`cd folder-name`).
+4. If necessary, set up your _environment variables_ (such as Supabase configuration) in an `.env.local` file based on the provided `.env`.
+5. Run the following command to install all dependencies:
+   ```bash
+   npm install
+   ```
+6. Once the installation is complete, start the development server:
+   ```bash
+   npm run dev
+   ```
+7. Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
+
+### How to Access the Admin Dashboard
+
+To access the Admin Dashboard, log in using the following credentials:
+
+- **Email:** `admin1@gmail.com`
+- **Password:** admin123
+
+Upon successful login, you will have complete access to movie management and other administrative features.
